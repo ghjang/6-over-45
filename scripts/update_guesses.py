@@ -51,5 +51,19 @@ next_guesses = [weighted_random_choice(frequency_with_bonus) for _ in range(5)]
 # next_guess.json 파일 업데이트
 next_guess_data = {"next_guesses": next_guesses}
 
+
+# 'data'로부터 'JSON' 문자열 생성
+def format_data(data):
+    formatted_str = '{\n  "next_guesses": [\n'
+    for guess in data["next_guesses"]:
+        formatted_str += "    " + json.dumps(guess, ensure_ascii=False) + ",\n"
+    formatted_str = formatted_str.rstrip(",\n") + "\n  ]\n}"
+    return formatted_str
+
+
+# JSON 데이터를 원하는 형식으로 출력
+formatted_json_str = format_data(next_guess_data)
+
+# 파일에 쓰기
 with open(NEXT_GUESS_FILE_PATH, "w", encoding="utf-8") as f:
-    json.dump(next_guess_data, f, ensure_ascii=False, indent=2, separators=(",", ": "))
+    f.write(formatted_json_str)
