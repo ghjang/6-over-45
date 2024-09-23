@@ -9,25 +9,29 @@ NEXT_GUESS_FILE_PATH = "data/next_guess.json"
 # 난수 시퀀스 초기화
 random.seed(time.time())
 
-# frequency.json 파일 읽기
-with open(FREQUENCY_FILE_PATH, "r", encoding="utf-8") as f:
-    frequency_data = json.load(f)
 
-# 최근 회차의 당첨번호와 보너스 번호 정보 가져오기
-recent_draws = frequency_data["recent_draws"]
+# frequency.json 파일 읽기
+def load_frequency_data(file_path):
+    with open(file_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
 
 # 누적 빈도수 정보 업데이트
-for draw in recent_draws.values():
-    winning_numbers = draw["winning_numbers"]
-    bonus_number = draw["bonus_number"]
+def update_cumulative_stats(frequency_data):
+    recent_draws = frequency_data["recent_draws"]
+    for draw in recent_draws.values():
+        winning_numbers = draw["winning_numbers"]
+        bonus_number = draw["bonus_number"]
 
-    for number in winning_numbers:
-        frequency_data["cumulative_stats"]["frequency_with_bonus"][number - 1] += 1
+        for number in winning_numbers:
+            frequency_data["cumulative_stats"]["frequency_with_bonus"][number - 1] += 1
+            frequency_data["cumulative_stats"]["frequency_without_bonus"][
+                number - 1
+            ] += 1
 
-    frequency_data["cumulative_stats"]["frequency_with_bonus"][bonus_number - 1] += 1
-
-# 빈도수 정보 가져오기
-frequency_with_bonus = frequency_data["cumulative_stats"]["frequency_with_bonus"]
+        frequency_data["cumulative_stats"]["frequency_with_bonus"][
+            bonus_number - 1
+        ] += 1
 
 
 # 가중치가 적용된 랜덤 번호 생성 (중복 없이)
@@ -46,15 +50,9 @@ def weighted_random_choice(weights, k=6):
     return sorted(unique_choices)
 
 
-next_guesses = [weighted_random_choice(frequency_with_bonus) for _ in range(5)]
-
-# next_guess.json 파일 업데이트
-next_guess_data = {"next_guesses": next_guesses}
-
-
-# 'data'로부터 'JSON' 문자열 생성
+# JSON 데이터를 직접 문자열로 변환하는 함수
 # NOTE: 'data' 전체를 'json.dumps'로 변환하면 원하는 형태의 줄바꿈이 되지 않아 커스텀 처리를 했음.
-def format_data(data):
+def format_json_directly(data):
     formatted_str = '{\n  "next_guesses": [\n'
     for guess in data["next_guesses"]:
         formatted_str += "    " + json.dumps(guess, ensure_ascii=False) + ",\n"
@@ -62,9 +60,26 @@ def format_data(data):
     return formatted_str
 
 
-# JSON 데이터를 원하는 형식으로 출력
-formatted_json_str = format_data(next_guess_data)
+# main 함수
+def main():
+    frequency_data = load_frequency_data(FREQUENCY_FILE_PATH)
+    update_cumulative_stats(frequency_data)
 
-# 파일에 쓰기
-with open(NEXT_GUESS_FILE_PATH, "w", encoding="utf-8") as f:
-    f.write(formatted_json_str)
+    frequency_with_bonus = frequency_data["cumulative_stats"]["frequency_with_bonus"]
+    frequency_without_bonus = frequency_data["cumulative_stats"][
+        "frequency_without_bonus"
+    ]
+
+    # 추첨번호 5개중에 3개는 보너스 번호가 있는 빈도 데이터에서 선택하고, 2개는 보너스 번호가 없는 빈도 데이터에서 선택
+    next_guesses = [weighted_random_choice(frequency_with_bonus) for _ in range(3)]
+    next_guesses += [weighted_random_choice(frequency_without_bonus) for _ in range(2)]
+
+    next_guess_data = {"next_guesses": next_guesses}
+    formatted_json_str = format_json_directly(next_guess_data)
+
+    with open(NEXT_GUESS_FILE_PATH, "w", encoding="utf-8") as f:
+        f.write(formatted_json_str)
+
+
+if __name__ == "__main__":
+    main()
