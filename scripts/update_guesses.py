@@ -53,6 +53,7 @@ next_guess_data = {"next_guesses": next_guesses}
 
 
 # 'data'로부터 'JSON' 문자열 생성
+# NOTE: 'data' 전체를 'json.dumps'로 변환하면 원하는 형태의 줄바꿈이 되지 않아 커스텀 처리를 했음.
 def format_data(data):
     formatted_str = '{\n  "next_guesses": [\n'
     for guess in data["next_guesses"]:
