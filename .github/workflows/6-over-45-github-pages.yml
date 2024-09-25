@@ -13,7 +13,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -70,3 +70,53 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Get next draw number
+        id: get_next_draw
+        run: |
+          LAST_DRAW=$(cat data/frequency.json | jq '.recent_draws | keys[] | sub("draw_"; "") | tonumber | max')
+          NEXT_DRAW=$((LAST_DRAW + 1))
+          echo "next_draw=$NEXT_DRAW" >> $GITHUB_OUTPUT
+
+      - name: Delete existing release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME="release-${{ steps.get_next_draw.outputs.next_draw }}"
+          RELEASE_ID=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/releases/tags/$TAG_NAME" \
+            | jq -r '.id')
+          if [ "$RELEASE_ID" != "null" ]; then
+            curl -X DELETE -H "Authorization: token $GITHUB_TOKEN" \
+              "https://api.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID"
+            git push --delete origin $TAG_NAME || true
+          fi
+
+      - name: Read next guesses
+        id: read_guesses
+        run: |
+          NEXT_GUESSES=$(cat data/next_guess.json | jq -r '.next_guesses | map(. | join(", ")) | join("\n")')
+          echo "next_guesses<<EOF" >> $GITHUB_OUTPUT
+          echo "$NEXT_GUESSES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        if: success()
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: release-${{ steps.get_next_draw.outputs.next_draw }}
+          name: 제 ${{ steps.get_next_draw.outputs.next_draw }} 회 로또 추측 번호
+          body: |
+            ## 제 ${{ steps.get_next_draw.outputs.next_draw }} 회 로또 추측 번호
+
+            **이번 회차 추측 번호:**
+            ${{ steps.read_guesses.outputs.next_guesses }}
+
+            **배포된 URL:** ${{ steps.deployment.outputs.page_url }}
+
+            ---
+            자세한 내용은 [여기](${{ steps.deployment.outputs.page_url }})에서 확인하세요.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
