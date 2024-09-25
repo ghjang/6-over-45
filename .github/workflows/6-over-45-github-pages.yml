@@ -3,7 +3,6 @@ name: Deploy 6-over-45 to GitHub Pages
 on:
   push:
     branches: ["main"]
-
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -19,17 +18,21 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
   build-and-deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
+      - name: Checkout current repository
         uses: actions/checkout@v4
+
+      - name: Checkout s-comp-box repository
+        uses: actions/checkout@v4
+        with:
+          repository: ghjang/s-comp-box
+          path: s-comp-box
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -38,7 +41,7 @@ jobs:
 
       - name: Install Dependencies and Build
         run: |
-          cd webapp/6-over-45
+          cd s-comp-box/webapp/6-over-45
           npm ci
           npm run build
 
@@ -48,7 +51,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "webapp/6-over-45/build"
+          path: "s-comp-box/webapp/6-over-45/build"
 
       - name: Deploy to GitHub Pages
         id: deployment
