@@ -1,11 +1,14 @@
 name: Update Guesses
 
 on:
+  workflow_dispatch:
+
   push:
     paths:
       - "data/frequency.json"
 
-  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * 1" # 매주 월요일 01:00 UTC (한국 시간으로 10:00 AM)
 
 permissions:
   contents: write

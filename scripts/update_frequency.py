@@ -49,7 +49,7 @@ with open("data/latest_lottery_result.json", "r") as f:
 with open("data/frequency.json", "r") as f:
     frequency_data = json.load(f)
 
-# 최신 로또 결과를 recent_draws에 추가 또는 업데이트
+# 최신 로또 결과를 recent_draws에 추가 또는 업데이트(오버라이트)
 draw_key = f"draw_{latest_result['draw_number']}"
 frequency_data["recent_draws"][draw_key] = {
     "winning_numbers": latest_result["winning_numbers"],
