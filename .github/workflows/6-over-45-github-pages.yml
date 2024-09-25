@@ -74,7 +74,7 @@ jobs:
       - name: Get next draw number
         id: get_next_draw
         run: |
-          LAST_DRAW=$(cat data/frequency.json | jq '.recent_draws | keys[] | sub("draw_"; "") | tonumber | max')
+          LAST_DRAW=$(cat data/frequency.json | jq '.recent_draws | keys | map(sub("draw_"; "") | tonumber) | max')
           NEXT_DRAW=$((LAST_DRAW + 1))
           echo "next_draw=$NEXT_DRAW" >> $GITHUB_OUTPUT
 
