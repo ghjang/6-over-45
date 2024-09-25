@@ -3,7 +3,14 @@ name: Deploy 6-over-45 to GitHub Pages
 on:
   push:
     branches: ["main"]
+
   workflow_dispatch:
+
+  # 'Update Guesses' workflow가 완료되면 이 workflow 실행
+  workflow_run:
+    workflows: ["Update Guesses"]
+    types:
+      - completed
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -44,6 +51,11 @@ jobs:
           cd s-comp-box/webapp/6-over-45
           npm ci
           npm run build
+
+      - name: Copy JSON files to build folder
+        run: |
+          mkdir -p s-comp-box/webapp/6-over-45/build/data
+          cp data/*.json s-comp-box/webapp/6-over-45/build/data/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
