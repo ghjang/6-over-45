@@ -43,6 +43,9 @@ def update_cumulative_stats(frequency_data):
 
 
 # 가중치가 적용된 랜덤 번호 생성 (중복 없이)
+#
+# NOTE: 'random.choices' 함수는 '가중치'를 적용해서 중복을 허용해 랜덤 번호를 뽑고,
+#       'random.sample' 함수는 '가중치' 적용은 없지만 중복을 허용하지 않고 랜덤 번호를 뽑는다.
 def weighted_random_choice(weights, k=6):
     population = list(range(1, 46))  # 1부터 45까지의 번호
     chosen = set()
