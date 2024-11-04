@@ -53,6 +53,12 @@
         10, 16, 17, 27, 28, 36
       ],
       "bonus_number": 6
+    },
+    "draw_1144": {
+      "winning_numbers": [
+        3, 4, 12, 15, 26, 34
+      ],
+      "bonus_number": 6
     }
   }
 }
