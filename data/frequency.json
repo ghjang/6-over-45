@@ -71,6 +71,12 @@
         6, 11, 17, 19, 40, 43
       ],
       "bonus_number": 28
+    },
+    "draw_1147": {
+      "winning_numbers": [
+        7, 11, 24, 26, 27, 37
+      ],
+      "bonus_number": 32
     }
   }
 }
