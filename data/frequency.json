@@ -161,6 +161,12 @@
         2, 12, 20, 24, 34, 42
       ],
       "bonus_number": 37
+    },
+    "draw_1162": {
+      "winning_numbers": [
+        20, 21, 22, 25, 28, 29
+      ],
+      "bonus_number": 6
     }
   }
 }
