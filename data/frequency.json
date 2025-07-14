@@ -269,6 +269,12 @@
         3, 16, 18, 24, 40, 44
       ],
       "bonus_number": 21
+    },
+    "draw_1180": {
+      "winning_numbers": [
+        6, 12, 18, 37, 40, 41
+      ],
+      "bonus_number": 3
     }
   }
 }
