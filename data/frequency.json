@@ -281,6 +281,12 @@
         8, 10, 14, 20, 33, 41
       ],
       "bonus_number": 28
+    },
+    "draw_1182": {
+      "winning_numbers": [
+        1, 13, 21, 25, 28, 31
+      ],
+      "bonus_number": 22
     }
   }
 }
