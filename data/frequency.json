@@ -329,6 +329,12 @@
         9, 19, 29, 35, 37, 38
       ],
       "bonus_number": 31
+    },
+    "draw_1190": {
+      "winning_numbers": [
+        7, 9, 19, 23, 26, 45
+      ],
+      "bonus_number": 33
     }
   }
 }
