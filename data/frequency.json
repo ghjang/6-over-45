@@ -341,6 +341,12 @@
         1, 4, 11, 12, 20, 41
       ],
       "bonus_number": 2
+    },
+    "draw_1192": {
+      "winning_numbers": [
+        10, 16, 23, 36, 39, 40
+      ],
+      "bonus_number": 11
     }
   }
 }
