@@ -347,6 +347,12 @@
         10, 16, 23, 36, 39, 40
       ],
       "bonus_number": 11
+    },
+    "draw_1193": {
+      "winning_numbers": [
+        6, 9, 16, 19, 24, 28
+      ],
+      "bonus_number": 17
     }
   }
 }
