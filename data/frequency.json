@@ -353,6 +353,12 @@
         6, 9, 16, 19, 24, 28
       ],
       "bonus_number": 17
+    },
+    "draw_1194": {
+      "winning_numbers": [
+        3, 13, 15, 24, 33, 37
+      ],
+      "bonus_number": 2
     }
   }
 }
