@@ -383,6 +383,12 @@
         26, 30, 33, 38, 39, 41
       ],
       "bonus_number": 21
+    },
+    "draw_1199": {
+      "winning_numbers": [
+        16, 24, 25, 30, 31, 32
+      ],
+      "bonus_number": 7
     }
   }
 }
