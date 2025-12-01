@@ -1,0 +1,8 @@
+# Internal documentation
+task.md
+implementation_plan.md
+improvement_proposal.md
+walkthrough.md
+
+# System
+.DS_Store
