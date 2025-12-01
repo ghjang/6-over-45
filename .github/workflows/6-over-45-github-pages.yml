@@ -37,12 +37,6 @@ jobs:
       - name: Checkout current repository
         uses: actions/checkout@v4
 
-      - name: Checkout s-comp-box repository
-        uses: actions/checkout@v4
-        with:
-          repository: ghjang/s-comp-box
-          path: s-comp-box
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -50,14 +44,14 @@ jobs:
 
       - name: Install Dependencies and Build
         run: |
-          cd s-comp-box/webapp/6-over-45
+          cd web
           npm ci
           npm run build
 
       - name: Copy JSON files to build folder
         run: |
-          mkdir -p s-comp-box/webapp/6-over-45/build/data
-          cp data/*.json s-comp-box/webapp/6-over-45/build/data/
+          mkdir -p web/build/data
+          cp data/*.json web/build/data/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -65,7 +59,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "s-comp-box/webapp/6-over-45/build"
+          path: "web/build"
 
       - name: Deploy to GitHub Pages
         id: deployment
