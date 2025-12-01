@@ -389,6 +389,12 @@
         16, 24, 25, 30, 31, 32
       ],
       "bonus_number": 7
+    },
+    "draw_1200": {
+      "winning_numbers": [
+        1, 2, 4, 16, 20, 32
+      ],
+      "bonus_number": 45
     }
   }
 }
