@@ -4,6 +4,7 @@
 	import { Tab } from 's-comp-core';
 	import LottoFrequency from './LottoFrequency.svelte';
 	import NextGuess from './NextGuess.svelte';
+	import PreviousDrawResult from './PreviousDrawResult.svelte';
 
 	let tab: Tab;
 
@@ -11,12 +12,17 @@
 		{
 			label: '로또 당첨 번호 빈도',
 			component: LottoFrequency,
-			componentClassName: null
+			componentClassName: undefined
+		},
+		{
+			label: '직전 회차 당첨 결과', // Initial placeholder
+			component: PreviousDrawResult,
+			componentClassName: undefined
 		},
 		{
 			label: '다음 당첨 번호 뽑기',
 			component: NextGuess,
-			componentClassName: null
+			componentClassName: undefined
 		}
 	];
 
@@ -24,12 +30,17 @@
 		try {
 			const response = await fetch(`${base}/data/latest_lottery_result.json`);
 			const data = await response.json();
-			const nextDrawNumber = parseInt(data.draw_number) + 1;
+			const currentDrawNumber = parseInt(data.draw_number);
+			const nextDrawNumber = currentDrawNumber + 1;
 
 			tabs = [
 				tabs[0],
 				{
 					...tabs[1],
+					label: `${currentDrawNumber}회 당첨 결과`
+				},
+				{
+					...tabs[2],
 					label: `${nextDrawNumber}회 당첨 번호 뽑기`
 				}
 			];
