@@ -51,7 +51,7 @@
 </script>
 
 <div class="tab-container">
-	<Tab bind:this={tab} selectedTabIndex={1} {tabs} />
+	<Tab bind:this={tab} selectedTabIndex={2} {tabs} />
 </div>
 
 <style lang="scss">
