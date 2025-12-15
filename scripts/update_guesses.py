@@ -124,6 +124,39 @@ def write_json_file(file_path, data, is_guesses=False):
         print(f"파일을 쓸 수 없습니다: {file_path}")
 
 
+
+# 드로우 키에서 회차 번호를 추출하는 헬퍼 함수
+def get_draw_number(draw_key):
+    return int(draw_key.split('_')[1])
+
+
+# 최근 5주간 출현 빈도 기반 가중치 계산 (Hot Numbers)
+def calculate_recent_trend_weights(frequency_data, weeks=5):
+    recent_draws = frequency_data["recent_draws"]
+    sorted_keys = sorted(recent_draws.keys(), key=get_draw_number)
+    target_draws = sorted_keys[-weeks:]
+
+    weights = [0] * 45
+    for key in target_draws:
+        draw = recent_draws[key]
+        for num in draw["winning_numbers"]:
+            weights[num - 1] += 1
+        # 보너스 번호도 출현으로 인정
+        weights[draw["bonus_number"] - 1] += 1
+    
+    return weights
+
+
+# 오랫동안 나오지 않은 번호 가중치 계산 (Cold Numbers)
+def calculate_cold_weights(frequency_without_bonus):
+    max_freq = max(frequency_without_bonus)
+    weights = []
+    for freq in frequency_without_bonus:
+        # 빈도가 낮을수록 가중치가 높아짐
+        weights.append(max_freq - freq + 1)
+    return weights
+
+
 # main 함수
 def main():
     try:
@@ -138,18 +171,38 @@ def main():
 
         update_cumulative_stats(frequency_data)
 
-        frequency_with_bonus = frequency_data["cumulative_stats"][
-            "frequency_with_bonus"
-        ]
-        frequency_without_bonus = frequency_data["cumulative_stats"][
-            "frequency_without_bonus"
-        ]
+        # 1. 전체 누적 빈도 (보너스 포함)
+        frequency_with_bonus = frequency_data["cumulative_stats"]["frequency_with_bonus"]
+        
+        # 2. 전체 누적 빈도 (보너스 미포함)
+        frequency_without_bonus = frequency_data["cumulative_stats"]["frequency_without_bonus"]
+        
+        # 3. 최근 12주간 Hot 트렌드 (최근 흐름 반영)
+        recent_trend_weights = calculate_recent_trend_weights(frequency_data, weeks=12)
+        
+        # 4. Cold 번호 (안 나온 번호 역가중치)
+        cold_weights = calculate_cold_weights(frequency_without_bonus)
+        
+        # 5. 완전 로또 (무작위 - 편향 제거)
+        random_weights = [1] * 45
 
-        # 추첨번호 5개중에 3개는 보너스 번호가 있는 빈도 데이터에서 선택하고, 2개는 보너스 번호가 없는 빈도 데이터에서 선택
-        next_guesses = [weighted_random_choice(frequency_with_bonus) for _ in range(3)]
-        next_guesses += [
-            weighted_random_choice(frequency_without_bonus) for _ in range(2)
-        ]
+        # 총 5개의 번호 조합 생성
+        next_guesses = []
+        
+        # 조합 1: 보너스 포함 전체 가중치
+        next_guesses.append(weighted_random_choice(frequency_with_bonus))
+        
+        # 조합 2: 보너스 미포함 전체 가중치
+        next_guesses.append(weighted_random_choice(frequency_without_bonus))
+        
+        # 조합 3: 최근 12주 Hot 트렌드
+        next_guesses.append(weighted_random_choice(recent_trend_weights))
+        
+        # 조합 4: Cold 번호 (역발상)
+        next_guesses.append(weighted_random_choice(cold_weights))
+        
+        # 조합 5: 완전 무작위 (운)
+        next_guesses.append(weighted_random_choice(random_weights))
 
         next_guess_data = {"next_guesses": next_guesses}
         # 새로운 next_guess 데이터를 파일에 쓰기
