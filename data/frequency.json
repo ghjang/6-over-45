@@ -407,6 +407,12 @@
         5, 12, 21, 33, 37, 40
       ],
       "bonus_number": 7
+    },
+    "draw_1203": {
+      "winning_numbers": [
+        3, 6, 18, 29, 35, 39
+      ],
+      "bonus_number": 24
     }
   }
 }
