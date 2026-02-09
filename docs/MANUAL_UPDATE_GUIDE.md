@@ -48,8 +48,8 @@ GitHub Actions(자동) 또는 사용자가 수동으로 업데이트를 실행�
     *   `latest_lottery_result.json`에 1210회차 정보를 저장합니다.
 
 2.  **`update_frequency.py` 실행**:
-    *   `latest_lottery_result.json`(1210회)을 읽어서 `frequency.json`의 끝에 추가합니다.
-    *   `frequency.json`의 통계 수치를 갱신합니다.
+    *   `latest_lottery_result.json`(1210회)을 읽어서 `frequency.json`의 `recent_draws` 끝에 추가합니다.
+    *   (참고: 파일 내의 `cumulative_stats`와 같은 누적 통계는 이 단계에서 갱신되지 않고, `recent_draws`에 데이터만 추가되는 구조입니다.)
 
 3.  **`update_guesses.py` 실행**:
     *   `next_guess.json`에 있던 **1210회 예측 번호**를 가져와서 `guesses.json`의 맨 끝에 '1210회 예측 기록'으로 저장합니다. (미래 -> 과거로 이동)
