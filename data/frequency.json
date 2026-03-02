@@ -461,6 +461,12 @@
         23, 26, 27, 35, 38, 40
       ],
       "bonus_number": 10
+    },
+    "draw_1213": {
+      "winning_numbers": [
+        5, 11, 25, 27, 36, 38
+      ],
+      "bonus_number": 2
     }
   }
 }
