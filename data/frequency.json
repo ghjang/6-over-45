@@ -485,6 +485,12 @@
         4, 6, 13, 17, 26, 28
       ],
       "bonus_number": 41
+    },
+    "draw_1227": {
+      "winning_numbers": [
+        1, 14, 16, 34, 41, 44
+      ],
+      "bonus_number": 13
     }
   }
 }
