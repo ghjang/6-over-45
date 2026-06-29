@@ -503,6 +503,12 @@
         12, 13, 29, 34, 37, 42
       ],
       "bonus_number": 16
+    },
+    "draw_1230": {
+      "winning_numbers": [
+        3, 8, 9, 22, 28, 42
+      ],
+      "bonus_number": 45
     }
   }
 }
