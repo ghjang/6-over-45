@@ -509,6 +509,12 @@
         3, 8, 9, 22, 28, 42
       ],
       "bonus_number": 45
+    },
+    "draw_1231": {
+      "winning_numbers": [
+        4, 13, 14, 18, 31, 38
+      ],
+      "bonus_number": 15
     }
   }
 }
