@@ -551,6 +551,12 @@
         10, 20, 23, 34, 37, 40
       ],
       "bonus_number": 36
+    },
+    "draw_1238": {
+      "winning_numbers": [
+        2, 13, 18, 32, 38, 42
+      ],
+      "bonus_number": 22
     }
   }
 }
