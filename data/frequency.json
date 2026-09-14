@@ -569,6 +569,12 @@
         11, 13, 19, 20, 31, 44
       ],
       "bonus_number": 27
+    },
+    "draw_1241": {
+      "winning_numbers": [
+        7, 13, 16, 23, 24, 43
+      ],
+      "bonus_number": 9
     }
   }
 }
