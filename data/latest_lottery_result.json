@@ -1,12 +1,12 @@
 {
-  "draw_number": "1244",
+  "draw_number": "1246",
   "winning_numbers": [
-    1,
-    13,
-    18,
-    26,
-    34,
-    38
+    16,
+    22,
+    23,
+    24,
+    27,
+    28
   ],
-  "bonus_number": 25
+  "bonus_number": 6
 }
