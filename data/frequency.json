@@ -587,6 +587,12 @@
         16, 22, 23, 24, 27, 28
       ],
       "bonus_number": 6
+    },
+    "draw_1247": {
+      "winning_numbers": [
+        8, 14, 21, 22, 42, 45
+      ],
+      "bonus_number": 24
     }
   }
 }
