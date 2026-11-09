@@ -599,6 +599,12 @@
         16, 18, 27, 36, 38, 42
       ],
       "bonus_number": 22
+    },
+    "draw_1249": {
+      "winning_numbers": [
+        2, 11, 16, 25, 34, 35
+      ],
+      "bonus_number": 14
     }
   }
 }
