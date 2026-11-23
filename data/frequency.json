@@ -611,6 +611,12 @@
         1, 5, 18, 23, 27, 28
       ],
       "bonus_number": 8
+    },
+    "draw_1251": {
+      "winning_numbers": [
+        14, 18, 19, 29, 40, 45
+      ],
+      "bonus_number": 1
     }
   }
 }
